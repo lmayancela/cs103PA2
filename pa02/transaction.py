@@ -12,8 +12,8 @@ class Transaction():
     def __init__(self,file_name):
         con= sqlite3.connect(dbfile)
         cur = con.cursor()
-        cur.execute('''CREATE TABLE IF NOT EXISTS transactions
-                    (item# int,amount int,category text,date date,day text, month text, year text, description text)''')
+        cur.execute('''CREATE TABLE IF NOT EXISTS categories
+                    (item# int,amount int,category text,date text,description text)''')
         con.commit()
         con.close()
         self.dbfile = dbfile
@@ -21,16 +21,16 @@ class Transaction():
     def show(self):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("SELECT rowid,item#,amount,category,date,description from transactions")
-        tuples = cur.fetchall()
+        cur.execute("select item#,amount,category,date,description from ")
+        toReturn = *cur.fetchall(), sep = "\n"
         con.commit()
         con.close()
-        return to_cat_dict_list(tuples)
+        return toReturn
 
     def add(self,item):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?)",(item['item#'],item['amount'],item['category'],item['date'],item['description']))
+        cur.execute("INSERT INTO categories VALUES(?,?,?,?,?)",(item['item#'],item['amount'],item['category'],item['date'],item['description']))
         con.commit()
         cur.execute("SELECT last_insert_rowid()")
         last_rowid = cur.fetchone()
@@ -41,7 +41,7 @@ class Transaction():
     def delete(self,rowid):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''DELETE FROM transactions
+        cur.execute('''DELETE FROM categories
                        WHERE rowid=(?);
         ''',(rowid,))
         con.commit()
@@ -50,35 +50,35 @@ class Transaction():
     def date(self):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("SELECT rowid,item#,amount,category,date,description from transactions order by year")
-        tuples = cur.fetchall()
+        cur.execute("select year,sex,count(*) from names2K where year>2004 and year<2010 group by year, sex order by year")
+        toReturn = *cur.fetchall(), sep = "\n"
         con.commit()
         con.close()
-        return to_cat_dict_list(tuples)
+        return toReturn
 
     def month(self):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("SELECT rowid,item#,amount,category,date,description from transactions order by month")
-        tuples = cur.fetchall()
+        cur.execute("select year,sex,count(*) from names2K where year>2004 and year<2010 group by year, sex order by year")
+        toReturn = *cur.fetchall(), sep = "\n"
         con.commit()
         con.close()
-        return to_cat_dict_list(tuples)
+        return toReturn
 
     def year(self):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("SELECT rowid,item#,amount,category,date,description from transactions order by day")
-        tuples = cur.fetchall()
+        cur.execute("select year,sex,count(*) from names2K where year>2004 and year<2010 group by year, sex order by year")
+        toReturn = *cur.fetchall(), sep = "\n"
         con.commit()
         con.close()
-        return to_cat_dict_list(tuples)
+        return toReturn
 
     def category(self):
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("SELECT rowid,item#,amount,category,date,description from transactions order by category")
-        tuples = cur.fetchall()
+        cur.execute("select year,sex,count(*) from names2K where year>2004 and year<2010 group by year, sex order by year")
+        toReturn = *cur.fetchall(), sep = "\n"
         con.commit()
         con.close()
-        return to_cat_dict_list(tuples)
+        return toReturn
