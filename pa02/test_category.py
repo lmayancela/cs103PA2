@@ -116,3 +116,4 @@ def test_update(med_db):
     cat2 = med_db.select_one(rowid)
     assert cat2['name']==cat1['name']
     assert cat2['desc']==cat1['desc']
+
