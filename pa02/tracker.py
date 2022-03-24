@@ -78,6 +78,10 @@ def process_choice(choice):
         desc = input("new category description: ")
         cat = {'name':name, 'desc':desc}
         category.update(rowid,cat)
+    elif choice == '4':
+        
+    elif choice == '11':
+        print(menu)
     else:
         print("choice",choice,"not yet implemented")
 
