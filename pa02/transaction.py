@@ -54,9 +54,6 @@ class Transaction():
     '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?)",
-        (item['item#'],item['amount'],item['category'],
-        item['date'],item['description']))
         cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?,?,?,?)",
         (item['item#'],item['amount'],item['category'], item['date'],item['day'],item['month'],item['year'],item['description']))
         con.commit()
