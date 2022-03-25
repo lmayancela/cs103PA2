@@ -41,8 +41,15 @@ def med_db(small_db):
     # add 10 categories
     for i in range(10):
         s = str(i)
-        cat ={'category':'category'+s,
-               'description':'description '+s,
+        cat ={
+               'itemnum':5, 
+                'amount':20.0,
+                'category':"deez nuts" +s, 
+                'date':"2022-04-01", 
+                'day':'01',
+                'month':'04',
+                'year':'2022',
+                'description':'describe deez nuts on yo chin'+s
                 }
         rowid = small_db.add(cat)
         rowids.append(rowid)
@@ -71,7 +78,7 @@ def test_to_cat_dict():
 def test_add(med_db):
     ''' add a category to db, the select it, then delete it'''
 
-    cat0 = {'rowid':2, 
+    cat0 = {
             'itemnum':5, 
             'amount':20.0,
             'category':"deez nuts", 
@@ -81,52 +88,35 @@ def test_add(med_db):
             'year':'2022',
             'description':'describe deez nuts on yo chin'
             }
-    cats0 = med_db.select_all()
+    cats0 = med_db.show()
     rowid = med_db.add(cat0)
-    cats1 = med_db.select_all()
+    cats1 = med_db.show()
     assert len(cats1) == len(cats0) + 1
-    cat1 = med_db.select_one(rowid)
-    assert cat1['rowid']==cat0['rowid']
-    assert cat1['description']==cat0['description']
+
 
 
 @pytest.mark.delete
 def test_delete(med_db):
     ''' add a category to db, delete it, and see that the size changes'''
     # first we get the initial table
-    cats0 = med_db.select_all()
+    cats0 = med_db.show()
 
     # then we add this category to the table and get the new list of rows
-    cat0 = {'name':'testing_add',
-            'desc':'see if it works',
+    cat0 = {'itemnum':5, 
+            'amount':20.0,
+            'category':"testing add", 
+            'date':"2022-04-01", 
+            'day':'01',
+            'month':'04',
+            'year':'2022',
+            'description':'testing add'
             }
     rowid = med_db.add(cat0)
-    cats1 = med_db.select_all()
+    cats1 = med_db.show()
 
     # now we delete the category and again get the new list of rows
     med_db.delete(rowid)
-    cats2 = med_db.select_all()
+    cats2 = med_db.show()
 
     assert len(cats0)==len(cats2)
     assert len(cats2) == len(cats1)-1
-
-@pytest.mark.update
-def test_update(med_db):
-    ''' add a category to db, updates it, and see that it changes'''
-
-    # then we add this category to the table and get the new list of rows
-    cat0 = {'category':'testing_add',
-            'description':'see if it works',
-            }
-    rowid = med_db.add(cat0)
-
-    # now we upate the category
-    cat1 = {'category':'new cat',
-            'description':'new desc'}
-    med_db.update(rowid,cat1)
-
-    # now we retrieve the category and check that it has changed
-    cat2 = med_db.select_one(rowid)
-    assert cat2['category']==cat1['category']
-    assert cat2['description']==cat1['description']
-
