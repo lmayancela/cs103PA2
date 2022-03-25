@@ -82,7 +82,7 @@ class Transaction():
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
         cur.execute('''SELECT rowid,itemnum,amount,category,
-        date,description from transactions order by year''')
+        date,description from transactions order by date''')
         tuples = cur.fetchall()
         con.commit()
         con.close()
@@ -108,7 +108,7 @@ class Transaction():
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
         cur.execute('''SELECT rowid,itemnum,amount,category,date,
-        description from transactions order by day''')
+        description from transactions order by year''')
         tuples = cur.fetchall()
         con.commit()
         con.close()

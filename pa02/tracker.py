@@ -35,7 +35,6 @@ from calendar import day_abbr
 from transaction import Transaction
 from category import Category
 import sys
-import datetime
 
 transactions = Transaction('tracker.db')
 category = Category('tracker.db')
@@ -84,26 +83,27 @@ def process_choice(choice):
         trans = transactions.show()
         print_transactions(trans)
     elif choice == '5':
-        currdate = datetime.datetime.now()
-        year = currdate.strftime("%Y")
-        day = currdate.strftime("%d")
-        month = currdate.strftime("%m")
         itemnum = input("new transaction item#: ")
         amount = input("new transaction amount: ")
         category = input("new transaction category: ")
         description = input("new transaction description: ")
+        year = input("what year was this transaction made: ")
+        month = input("which month (numerical like 03 for March): ")
+        day = input("which day (as a two-digit number like 03): ")
         trans = {'itemnum':itemnum,'amount':amount,'category':category, 'date': year+'-'+month+'-'+day,'day':day,'month':month,'year':year,'description':description}  
         transactions.add(trans)
     elif choice == '6':
-        print("not implemented")
+        rowId = int(input("Provide ID of transaction to be deleted: "))
+        print("Deleting Element with ID: "+ str(rowId))
+        transactions.delete(rowId)
     elif choice == '7':
-        print("not implemented")
+        print_transactions(transactions.date())
     elif choice == '8':
-        print("not implemented")
+        print_transactions(transactions.month())
     elif choice == '9':
-        print("not implemented")
+        print_transactions(transactions.year())
     elif choice == '10':
-        print("not implemented")
+        print_transactions(transactions.category())
     elif choice == '11':
         print(menu)
     else:
@@ -133,12 +133,12 @@ def print_transactions(items):
         print('no items to print')
         return
     print('\n')
-    print("%-10s %-10d %-10s %-10d %-30s"%(
-        'item #','amount','category','date','description'))
-    print('-'*40)
+    print("%-10s %-10s %-10s %-10s %-10s %-30s"%(
+        'row_id','item #','amount','category','date','description'))
+    print('-'*100)
     for item in items:
         values = tuple(item.values()) 
-        print("%-10s %-10d %-10s %-10d %-30s"%values)
+        print("%-10s %-10s %-10d %-10s %-10s %-30s"%(values[0], values[1], values[2], values[3], values[4], values[5]))
 
 def print_category(cat):
     print("%-3d %-10s %-30s"%(cat['rowid'],cat['name'],cat['desc']))
