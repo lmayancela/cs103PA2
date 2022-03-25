@@ -55,7 +55,8 @@ class Transaction():
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
         cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?,?,?,?)",
-        (item['itemnum'],item['amount'],item['category'], item['date'],item['day'],item['month'],item['year'],item['description']))
+        (item['itemnum'],item['amount'],item['category'], item['date'],
+        item['day'],item['month'],item['year'],item['description']))
         con.commit()
         cur.execute("SELECT last_insert_rowid()")
         last_rowid = cur.fetchone()
