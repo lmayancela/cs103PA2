@@ -31,6 +31,7 @@ could be replaced with PostgreSQL or Pandas or straight python lists
 
 '''
 
+from calendar import day_abbr
 from transaction import Transaction
 from category import Category
 import sys
@@ -83,8 +84,13 @@ def process_choice(choice):
         trans = transactions.show()
         print_transactions(trans)
     elif choice == '5':
+        currdate = datetime.datetime.now()
+        year = currdate.strftime("%Y")
+        day = currdate.strftime("%d")
+        month = currdate.strftime("%m")
+        itemnum = input("new transaction item#: ")
         amount = input("new transaction amount: ")
-        category
+        category = input("new transaction category: ")
     elif choice == '6':
     elif choice == '7':
     elif choice == '8':

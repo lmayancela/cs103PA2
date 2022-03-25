@@ -30,7 +30,7 @@ class Transaction():
         cur = con.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS transactions
                     (item# int,amount int,category text,
-                    date date,day text, month text, year text, 
+                    date text,day text, month text, year text, 
                     description text)''')
         con.commit()
         con.close()
@@ -57,6 +57,8 @@ class Transaction():
         cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?)",
         (item['item#'],item['amount'],item['category'],
         item['date'],item['description']))
+        cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?,?,?,?)",
+        (item['item#'],item['amount'],item['category'], item['date'],item['day'],item['month'],item['year'],item['description']))
         con.commit()
         cur.execute("SELECT last_insert_rowid()")
         last_rowid = cur.fetchone()
