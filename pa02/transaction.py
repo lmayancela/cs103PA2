@@ -7,7 +7,7 @@ def to_cat_dict(cat_tuple):
     '''
     put a docstring here
     '''
-    cat = {'rowid':cat_tuple[0], 'item#':cat_tuple[1], 'amount':cat_tuple[2],
+    cat = {'rowid':cat_tuple[0], 'itemnum':cat_tuple[1], 'amount':cat_tuple[2],
     'category':cat_tuple[3], 'date':cat_tuple[4], 'description':cat_tuple[5]}
     return cat
 
@@ -29,8 +29,8 @@ class Transaction():
         con= sqlite3.connect(dbfile)
         cur = con.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS transactions
-                    (item# int,amount int,category text,
-                    date text,day text, month text, year text, 
+                    (itemnum int,amount int,category text,
+                    date text,day text, month text, year text,
                     description text)''')
         con.commit()
         con.close()
@@ -42,7 +42,7 @@ class Transaction():
     '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute("SELECT rowid,item#,amount,category,date,description from transactions")
+        cur.execute("SELECT rowid,itemnum,amount,category,date,description from transactions")
         tuples = cur.fetchall()
         con.commit()
         con.close()
@@ -55,7 +55,7 @@ class Transaction():
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
         cur.execute("INSERT INTO transactions VALUES(?,?,?,?,?,?,?,?)",
-        (item['item#'],item['amount'],item['category'], item['date'],item['day'],item['month'],item['year'],item['description']))
+        (item['itemnum'],item['amount'],item['category'], item['date'],item['day'],item['month'],item['year'],item['description']))
         con.commit()
         cur.execute("SELECT last_insert_rowid()")
         last_rowid = cur.fetchone()
@@ -81,7 +81,7 @@ class Transaction():
     '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT rowid,item#,amount,category,
+        cur.execute('''SELECT rowid,itemnum,amount,category,
         date,description from transactions order by year''')
         tuples = cur.fetchall()
         con.commit()
@@ -94,7 +94,7 @@ class Transaction():
     '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT rowid,item#,amount,category,date,
+        cur.execute('''SELECT rowid,itemnum,amount,category,date,
         description from transactions order by month''')
         tuples = cur.fetchall()
         con.commit()
@@ -107,7 +107,7 @@ class Transaction():
     '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT rowid,item#,amount,category,date,
+        cur.execute('''SELECT rowid,itemnum,amount,category,date,
         description from transactions order by day''')
         tuples = cur.fetchall()
         con.commit()
@@ -120,7 +120,7 @@ class Transaction():
     '''
         con= sqlite3.connect(self.dbfile)
         cur = con.cursor()
-        cur.execute('''SELECT rowid,item#,amount,category,date,
+        cur.execute('''SELECT rowid,itemnum,amount,category,date,
         description from transactions order by category''')
         tuples = cur.fetchall()
         con.commit()

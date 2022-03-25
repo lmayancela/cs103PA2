@@ -13,7 +13,7 @@ class Transaction():
         con= sqlite3.connect(dbfile)
         cur = con.cursor()
         cur.execute('''CREATE TABLE IF NOT EXISTS transactions
-                    (item# int,amount int,category text,date date,day text, month text, year text, description text)''')
+                    (item# int,amount int,category text,date text,day text, month text, year text, description text)''')
         con.commit()
         con.close()
         self.dbfile = dbfile
