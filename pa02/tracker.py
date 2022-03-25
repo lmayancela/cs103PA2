@@ -91,11 +91,19 @@ def process_choice(choice):
         itemnum = input("new transaction item#: ")
         amount = input("new transaction amount: ")
         category = input("new transaction category: ")
+        description = input("new transaction description: ")
+        trans = {'itemnum':itemnum,'amount':amount,'category':category, 'date': year+'-'+month+'-'+day,'day':day,'month':month,'year':year,'description':description}  
+        transactions.add(trans)
     elif choice == '6':
+        print("not implemented")
     elif choice == '7':
+        print("not implemented")
     elif choice == '8':
+        print("not implemented")
     elif choice == '9':
+        print("not implemented")
     elif choice == '10':
+        print("not implemented")
     elif choice == '11':
         print(menu)
     else:
