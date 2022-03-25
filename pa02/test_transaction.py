@@ -3,7 +3,7 @@ test_transaction runs unit and integration tests on the transaction module
 '''
 
 import pytest
-from transaction import transaction
+from transaction import transaction, to_cat_dict
 
 @pytest.fixture
 def dbfile(tmpdir):
