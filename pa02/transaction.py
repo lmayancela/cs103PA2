@@ -22,7 +22,7 @@ class Transaction():
     put a docstring here
     '''
 
-    def __init__(self,file_name):
+    def __init__(self,dbfile):
         '''
     put a docstring here
     '''
