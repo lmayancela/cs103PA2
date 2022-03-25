@@ -26,15 +26,12 @@ In place of SQL queries, we will have method calls.
 
 This app will store the data in a SQLite database ~/tracker.db
 
-Note the actual implementation of the ORM is hidden and so it 
+Note the actual implementation of the ORM is hidden and so it
 could be replaced with PostgreSQL or Pandas or straight python lists
 
 '''
-
-from calendar import day_abbr
-from transaction import Transaction
 from category import Category
-import sys
+from transaction import Transaction
 
 transactions = Transaction('tracker.db')
 category = Category('tracker.db')
@@ -42,7 +39,7 @@ category = Category('tracker.db')
 
 # here is the menu for the tracker app
 
-menu = '''
+MENU = '''
 0. quit
 1. show categories
 2. add category
@@ -61,10 +58,11 @@ menu = '''
 
 
 def process_choice(choice):
+    '''
+    put a docstring here
+    '''
 
-    if choice=='0':
-        return
-    elif choice=='1':
+    if choice=='1':
         cats = category.select_all()
         print_categories(cats)
     elif choice=='2':
@@ -85,17 +83,18 @@ def process_choice(choice):
     elif choice == '5':
         itemnum = input("new transaction item#: ")
         amount = input("new transaction amount: ")
-        category = input("new transaction category: ")
+        category_type = input("new transaction category: ")
         description = input("new transaction description: ")
         year = input("what year was this transaction made: ")
         month = input("which month (numerical like 03 for March): ")
         day = input("which day (as a two-digit number like 03): ")
-        trans = {'itemnum':itemnum,'amount':amount,'category':category, 'date': year+'-'+month+'-'+day,'day':day,'month':month,'year':year,'description':description}  
+        trans = {'itemnum':itemnum,'amount':amount,'category':category_type,'date':
+         year+'-' +month+'-'+day,'day':day,'month':month,'year':year,'description':description}
         transactions.add(trans)
     elif choice == '6':
-        rowId = int(input("Provide ID of transaction to be deleted: "))
-        print("Deleting Element with ID: "+ str(rowId))
-        transactions.delete(rowId)
+        row_id = int(input("Provide ID of transaction to be deleted: "))
+        print("Deleting Element with ID: "+ str(row_id))
+        transactions.delete(row_id)
     elif choice == '7':
         print_transactions(transactions.date())
     elif choice == '8':
@@ -105,19 +104,18 @@ def process_choice(choice):
     elif choice == '10':
         print_transactions(transactions.category())
     elif choice == '11':
-        print(menu)
+        print(MENU)
     else:
-        print("choice",choice,"not yet implemented")
+        choice = '0'
+        return choice
 
     choice = input("> ")
-    return(choice)
+    return choice
 
 
 def toplevel():
     ''' handle the user's choice '''
-
-    ''' read the command args and process them'''
-    print(menu)
+    print(MENU)
     choice = input("> ")
     while choice !='0' :
         choice = process_choice(choice)
@@ -137,13 +135,20 @@ def print_transactions(items):
         'row_id','item #','amount','category','date','description'))
     print('-'*100)
     for item in items:
-        values = tuple(item.values()) 
-        print("%-10s %-10s %-10d %-10s %-10s %-30s"%(values[0], values[1], values[2], values[3], values[4], values[5]))
+        values = tuple(item.values())
+        print("%-10s %-10s %-10d %-10s %-10s %-30s"%
+        (values[0], values[1], values[2], values[3], values[4], values[5]))
 
 def print_category(cat):
+    '''
+    put a docstring here
+    '''
     print("%-3d %-10s %-30s"%(cat['rowid'],cat['name'],cat['desc']))
 
 def print_categories(cats):
+    '''
+    put a docstring here
+    '''
     print("%-3s %-10s %-30s"%("id","name","description"))
     print('-'*45)
     for cat in cats:
@@ -153,4 +158,3 @@ def print_categories(cats):
 # here is the main call!
 
 toplevel()
-
